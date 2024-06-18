@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { searchData, getAllTempData, getDashboardData } from "../Controller/analytic.controller.js"
+import { getSearchData, getAllTempData, getDashboardData } from "../Controller/analytic.controller.js"
 
 const router = Router()
-router.route("/get_temp_data").post(getAllTempData)
-router.route("/get_dashboard_data").post(getDashboardData)
-router.route("/get_all_insight_data").post(searchData)
+router.route("/getAllData").post(getAllTempData)
+router.route("/getVisualData").post(getDashboardData)
+router.route("/search").post(getSearchData)
 
 
 export default router
