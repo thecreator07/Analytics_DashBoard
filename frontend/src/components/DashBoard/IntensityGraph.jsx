@@ -66,8 +66,6 @@ const IntensityGraph = () => {
       )
   );
   console.log(ismobile);
-  // console.log("likelihoodData", likelihoodData);
-  // console.log("intensityData", intensityData);
   const options = {
     chart: {
       id: "Intensity",

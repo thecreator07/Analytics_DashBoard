@@ -88,6 +88,17 @@ export const getSearchData = async (req, res, next) => {
             }
         })
 
+        pipeline.push({
+            $project: {
+                sector: 1,
+                topic: 1,
+                insight: 1,
+                title: 1,
+                end_year: 1,
+                url: 1
+            }
+        })
+
         const insightData = tempData.aggregate(pipeline)
         const options = {
             page,

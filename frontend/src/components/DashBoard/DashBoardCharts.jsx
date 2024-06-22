@@ -12,30 +12,20 @@ function DashBoardCharts() {
     <>
       <div className="w-full flex flex-col mt-8 gap-6">
         <div
-          className={`w-full h-[500px] graphmorph lg:w-full ${
-            mode === "light" ? "bg-white text-black" : "bg-slate-800 text-white"
-          } rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
+          className={`w-full h-[500px] graphmorph lg:w-full ${mode === "light" ? "bg-white text-black" : "bg-[#1f1f1f] border-red-50 text-white"} border rounded-xl shadow-md  p-3`}
         >
           <IntensityGraph />
         </div>
         <div className="flex flex-col lg:flex-row  gap-6">
           <div
-            className={`w-full h-[400px] lg:h-[500px] lg:w-1/2 ${
-              mode === "light"
-                ? "bg-white text-black"
-                : "bg-slate-800 text-white"
-            } rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
+            className={`w-full h-[400px] lg:h-[500px] lg:w-1/2 ${mode === "light" ? "bg-white text-black" : "bg-[#1f1f1f] border-red-50 text-white"} border rounded-xl shadow-md  p-3`}
           >
             <div className="w-full h-full mt-3">
               <DonutChartTopic />
             </div>
           </div>
           <div
-            className={`w-full h-[400px]  lg:h-[500px] lg:w-1/2 ${
-              mode === "light"
-                ? "bg-white text-black"
-                : "bg-slate-800 text-white"
-            } rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
+            className={`w-full h-[400px]  lg:h-[500px] lg:w-1/2 ${mode === "light" ? "bg-white text-black" : "bg-[#1f1f1f] border-red-50 text-white"} rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
           >
             <div className="w-full h-full mt-3">
               <RadialchartPestle />
@@ -45,22 +35,14 @@ function DashBoardCharts() {
 
         <div className="flex  flex-col lg:flex-row  gap-6">
           <div
-            className={`w-full lg:w-5/12 h-[400px] lg:h-[500px]  ${
-              mode === "light"
-                ? "bg-white text-black"
-                : "bg-slate-800 text-white"
-            } rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
+            className={`w-full lg:w-5/12 h-[400px] lg:h-[500px]  ${mode === "light" ? "bg-white text-black" : "bg-[#1f1f1f] border-red-50 text-white"} rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
           >
             <div className="w-full h-full mt-3">
               <RegionPolarChart />
             </div>
           </div>
           <div
-            className={`w-full  h-[400px] lg:w-7/12 lg:h-[500px]  ${
-              mode === "light"
-                ? "bg-white text-black"
-                : "bg-slate-800 text-white"
-            } rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
+            className={`w-full  h-[400px] lg:w-7/12 lg:h-[500px]  ${mode === "light" ? "bg-white text-black" : "bg-[#1f1f1f] border-red-50 text-white"} rounded-xl border border-[#e5d3ff] p-3 shadow-md`}
           >
             <div className="w-full h-full mt-3">
             <h1 className="font-semibold text-lg">Country</h1>

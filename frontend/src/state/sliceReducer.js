@@ -21,7 +21,7 @@ export const anlyticsSlice = createSlice({
             state.allData = allData
         },
         setsearchData: (state, action) => {
-            const searchData = action.payload
+            const {searchData} = action.payload
             state.searchData = searchData
         },
         setDashBoardData: (state, action) => {

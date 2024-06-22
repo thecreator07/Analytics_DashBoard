@@ -3,7 +3,6 @@ import { GrGroup } from "react-icons/gr";
 import { LuPackageCheck } from "react-icons/lu";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import { FaEarthAsia } from "react-icons/fa6";
-import { TbFilter } from "react-icons/tb";
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,22 +16,20 @@ import DashBoardCharts from "../components/DashBoard/DashBoardCharts";
 const DashBoard = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
-  const ismobile = useMediaQuery('(min-width:"600px")')
+  const ismobile = useMediaQuery('(min-width:"600px")');
   const [country, setcountry] = useState("");
   const [topic, settopic] = useState("");
   const [endYear, setendYear] = useState("");
   const [source, setsource] = useState("");
   const [pestle, setpestle] = useState("");
   // const [countryFilterTerm, setCountryFilterTerm] = useState("");
-  const [end_year, setEndYear] = useState("");
+  // const [end_year, setEndYear] = useState("");
   const [region, setregion] = useState("");
   const [sector, setsector] = useState("");
   const [filter, setfilter] = useState(false);
   // const [endYearFilterTerm, setEndYearFilterTerm] = useState("");
   const mobileView = useMediaQuery("(min-width:600px)");
   console.log(mobileView);
-  // console.log(window.location.origin);
-
   const fetchAndSetDashboardData = async (d) => {
     try {
       const { data, dashBoardData } = await fetchVisualData(d);
@@ -110,7 +107,7 @@ const DashBoard = () => {
     });
   };
   const handleEndYear = (e) => {
-    setEndYear(e.target.value);
+    setendYear(e.target.value);
     fetchAndSetDashboardData({
       sector: sector || "",
       country: country || "",
@@ -206,7 +203,6 @@ const DashBoard = () => {
   useEffect(() => {
     fetchAndSetDashboardData();
     fetchwholedata();
-
   }, []);
 
   return (
@@ -226,7 +222,11 @@ const DashBoard = () => {
           </label>
           <div className="flex gap-4 md:gap-16 ">
             <select
-              className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+              style={{
+                color: mode === "light" ? "black" : "white",
+                backgroundColor: mode === "light" ? "white" : "black",
+              }}
+              className="bg-transparent bg-black h-full w-full md:w-auto focus:outline-none outline-none border border-x-orange-50 p-2.5 rounded-lg text-sm cursor-pointer"
               value={sector}
               onChange={handleSector}
               placeholder="Sector"
@@ -238,7 +238,11 @@ const DashBoard = () => {
               ))}
             </select>
             <button
-              className="neomorph bg-inherit h-full hover:bg-slate-300 w-full md:w-auto focus:outline-none outline-none border px-4 py-2 rounded-lg text-base font-semibold cursor-pointer"
+              style={{
+                color: mode === "light" ? "black" : "white",
+                backgroundColor: mode === "light" ? "white" : "black",
+              }}
+              className=" bg-inherit h-full hover:bg-slate-300 w-full md:w-auto focus:outline-none outline-none border px-4 py-2 rounded-lg text-base font-semibold cursor-pointer"
               onClick={handlefilterButton}
             >
               {filter ? "Remove" : "Add"}&nbsp;Filters
@@ -262,7 +266,11 @@ const DashBoard = () => {
                 Country
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className="h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={country}
                 onChange={handlecountry}
                 placeholder="Pestles"
@@ -289,7 +297,11 @@ const DashBoard = () => {
                 Topic
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={topic}
                 onChange={handletopic}
                 placeholder="Pestles"
@@ -316,7 +328,11 @@ const DashBoard = () => {
                 EndYear
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={endYear}
                 onChange={handleEndYear}
                 placeholder="Pestles"
@@ -343,7 +359,11 @@ const DashBoard = () => {
                 Source
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={source}
                 onChange={handleSource}
                 placeholder="Pestles"
@@ -369,7 +389,11 @@ const DashBoard = () => {
                 Region
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className="h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={region}
                 onChange={handleRegion}
                 placeholder="Pestles"
@@ -395,7 +419,11 @@ const DashBoard = () => {
                 Pestle
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={pestle}
                 onChange={handlePestle}
                 placeholder="Pestles"
@@ -413,8 +441,13 @@ const DashBoard = () => {
           {result &&
             result.map((value, index) => (
               <div
+                style={{
+                  backgroundColor: mode === "light" ? "white" : "#1f1f1f",
+                }}
                 key={index}
-                className={`w-full md:w-auto md:flex-1 p-2.5 rounded-md shadow border-gray-300  h-auto ${
+                className={`w-full md:w-auto md:flex-1 p-2.5 rounded-md shadow-md ${
+                  mode === "light" ? "shadow-slate-50" : "shadow-slate-800"
+                }border border-gray-300  h-auto ${
                   mode === "light" ? "bg-white" : "bg-slate-800"
                 } items-center relative overflow-hidden`}
               >

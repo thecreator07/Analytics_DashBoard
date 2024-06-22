@@ -21,7 +21,6 @@ function RadialchartPestle() {
     item !== "" ? item : "None"
   );
 
-  //console.log(donutLabel)
 
   const Series = [...PestleSet].map((item) => {
     return (
@@ -44,8 +43,8 @@ function RadialchartPestle() {
         text: "Pestles",
         align: "left",
         style: {
-          fontSize: "18px", // Optional: Adjust font size if needed
-          color: mode === "light" ? "#000" : "#fff", // Change text color of title
+          fontSize: "18px", 
+          color: mode === "light" ? "#000" : "#fff",
         },
       },
       subtitle: {
@@ -53,7 +52,7 @@ function RadialchartPestle() {
         align: "left",
         style: {
           fontSize: "14px",
-          color: mode === "light" ? "#000" : "#fff", // Change text color of title
+          color: mode === "light" ? "#000" : "#fff", 
         },
       },
       legend: {

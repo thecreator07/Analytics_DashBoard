@@ -1,15 +1,7 @@
 import { useLocation, useNavigate, Route, Routes } from "react-router-dom";
-import { useContext, useEffect } from "react";
-// import Sidebar from "../components/sidebar/Sidebar";
-// import Navbar from "../components/Navbar/Navbar";
+import { useEffect } from "react";
 
-// import { fetchUserData } from "../api/userAPI"
-// import { UserContext } from "../context/userContext";
-// import Topics from "./Topics";
-// import Settings from "./Settings";
-// import AllInsights from "./AllInsights";
 import { useSelector } from "react-redux";
-import NavSec from "../components/Navbar/NavSec";
 import Sidebar from "../components/SideBar/Sidebar";
 import Setting from "./Setting";
 import DashBoard from "./DashBoard";
@@ -36,10 +28,8 @@ const HomePage = () => {
          ${mode === "light" ? "bg-slate-100" : "bg-[#0F0F0F]"}
           overflow-hidden`}
       >
-        {/* <NavSec user={"userData"} /> */}
         <Routes>
           <Route exact path="/main" element={<DashBoard />} />
-          {/* <Route exact path="/analysis" element={<Analysis />} /> */}
           <Route exact path="/explore" element={<Search />} />
           <Route exact path="/settings" element={<Setting />} />
         </Routes>

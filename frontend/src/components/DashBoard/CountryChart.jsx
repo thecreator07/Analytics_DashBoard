@@ -12,12 +12,9 @@ const CountryChart = () => {
     colorAxis: {
       colors: ["#BEADFA", "#BEADFA"],
     },
-    datalessRegionColor: "#faf0e6",
+    datalessRegionColor: "#80FF80",
     defaultColor: "#414141",
-    backgroundColor: mode === "dark" ? "#1E293B" : "#fff",
-    legend: {
-        show: true,
-      },
+    backgroundColor: mode === "dark" ? "" : "#fff",
   };
 
   useEffect(() => {
@@ -48,8 +45,6 @@ const CountryChart = () => {
             const chart = chartWrapper.getChart();
             const selection = chart.getSelection();
             if (selection.length === 0) return;
-            const region = data[selection[0].row + 1];
-            //console.log("Selected : " + region);
           },
         },
       ]}

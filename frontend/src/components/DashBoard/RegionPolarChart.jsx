@@ -20,7 +20,6 @@ const RegionPolarChart = () => {
     item !== "" ? item : "None"
   );
 
-  //console.log(donutLabel)
 
   const pieSeries = [...regionSet].map((item) => {
     return (

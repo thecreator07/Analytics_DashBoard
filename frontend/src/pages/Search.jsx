@@ -6,17 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllData, fetchSearchData } from "../Api/fetchApi";
 import { setallData, setsearchData } from "../state/sliceReducer";
 import { SECTORS } from "../utils/constant";
-import { useMediaQuery } from "@mui/material";
+import { Pagination, useMediaQuery } from "@mui/material";
+import AnalyticTable from "../components/Search/AnalyticTable";
 
 // visualize
 const Search = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
   const ismobile = useMediaQuery('(min-width:"600px")');
+  const [pageChange, setPageChange] = useState(1);
   const [country, setcountry] = useState("");
   const [endYear, setendYear] = useState("");
   const [pestle, setpestle] = useState("");
-  const [end_year, setEndYear] = useState("");
+  //   const [end_year, setEndYear] = useState("");
   const [sector, setsector] = useState("");
   //   const [filter, setfilter] = useState(false);
   const [search, setsearch] = useState("");
@@ -45,105 +47,46 @@ const Search = () => {
   const getAllDAta = useSelector((state) => state.allData);
   console.log("searchData", SearchData);
   //   console.log("search", search?search:"");
+  let page;
   const handleSearch = () => {
     fetchAndSetSearchData({
       query: search || "",
-      page: page || 1,
+      page: pageChange || 1,
       fetch: {
         sector: sector || "",
         country: country || "",
         pestle: pestle || "",
-        end_year: end_year || "",
-      },
-    });
-  };
-  let page;
-  const handlePestle = (e) => {
-    const { value } = e.target;
-    setpestle(value);
-    // console.log(e);
-    fetchAndSetSearchData({
-      query: search || "",
-      page: page || 1,
-      fetch: {
-        sector: sector || "",
-        country: country || "",
-        pestle: value || "",
-        end_year: end_year || "",
-      },
-    });
-  };
-  const handleSector = (e) => {
-    const { value } = e.target;
-
-    setsector(value);
-    fetchAndSetSearchData({
-      query: search || "",
-      page: page || 1,
-      fetch: {
-        sector: value || "",
-        country: country || "",
-        pestle: pestle || "",
-        end_year: end_year || "",
-      },
-    });
-  };
-  const handlecountry = (e) => {
-    const { value } = e.target;
-
-    setcountry(value);
-    fetchAndSetSearchData({
-      query: search || "",
-      page: page || 1,
-      fetch: {
-        sector: sector || "",
-        country: value || "",
-        pestle: pestle || "",
-        end_year: end_year || "",
+        end_year: parseInt(endYear) || "",
       },
     });
   };
 
-  const handleEndYear = (e) => {
-    const { value } = e.target;
-
-    setEndYear(value);
+  const handleFilter = () => {
     fetchAndSetSearchData({
       query: search || "",
-      page: page || 1,
+      page: pageChange || 1,
       fetch: {
         sector: sector || "",
         country: country || "",
         pestle: pestle || "",
-        end_year: value || "",
+        end_year: parseInt(endYear) || "",
+      },
+    });
+  };
+  const handlePageChange = (e, value) => {
+    setPageChange(value);
+    fetchAndSetSearchData({
+      query: search || "",
+      page: value || 1,
+      fetch: {
+        sector: sector || "",
+        country: country || "",
+        pestle: pestle || "",
+        end_year: parseInt(endYear) || "",
       },
     });
   };
 
-  //   const handlefilterButton = (e) => {
-  //     e.preventDefault();
-  //     console.log(filter);
-  //     if (filter) {
-  //       setsector("");
-  //       setcountry("");
-
-  //       setpestle("");
-
-  //       setendYear("");
-
-  //       fetchAndSetSearchData({
-  //         sector: e.target.value,
-  //         country: "",
-  //         pestle: "",
-
-  //         end_year: "",
-  //       });
-  //     }
-  //     setfilter(!filter);
-  //   };
-  //   const Filterdata = useSelector((state) => state.DashBoardData.visualData);
-
-  // console.log("Filterdata", Filterdata);
   // let sectorData = new Set()
   let pestleData = new Set();
   let countryData = new Set();
@@ -168,25 +111,31 @@ const Search = () => {
   const endYearArr = [...endYearData];
   console.log(endYearArr);
   useEffect(() => {
-    fetchAndSetSearchData();
+    handleSearch();
+    // fetchAndSetSearchData();
     fetchwholedata();
-  }, [sector, pestle, sector, endYear, search, page]);
+  }, []);
 
   return (
     <div className="w-full h-full">
       <div className="w-full p-3 md:py-4 md:p-8 h-full overflow-x-auto">
-        <div className="flex gap-5">
+        <div className="flex md:flex-row flex-col gap-5">
           <input
+            style={{
+              color: mode === "light" ? "black" : "white",
+              backgroundColor: mode === "light" ? "white" : "black",
+            }}
             type="text"
             onChange={(e) => setsearch(e.target.value)}
-            className="p-2.5 rounded-3xl focus:outline-none outline-none "
+            placeholder="Energy oil China"
+            className="px-4 rounded-3xl border focus:outline-none outline-none "
           />
           <button
             onClick={handleSearch}
             type="button"
-            className="px-8 rounded-3xl text-base font-semibold bg-white"
+            className="px-8 py-2.5 rounded-3xl text-base font-semibold bg-white"
           >
-            search
+            Search
           </button>
         </div>
         <div
@@ -208,9 +157,13 @@ const Search = () => {
               </label>
               <div className="flex gap-4 md:gap-16 ">
                 <select
-                  className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                  style={{
+                    color: mode === "light" ? "black" : "white",
+                    backgroundColor: mode === "light" ? "white" : "black",
+                  }}
+                  className="h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                   value={sector}
-                  onChange={handleSector}
+                  onChange={(e) => setsector(e.target.value)}
                   placeholder="Sector"
                 >
                   {SECTORS.map((i, index) => (
@@ -235,9 +188,13 @@ const Search = () => {
                 Pestle
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className="h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={pestle}
-                onChange={handlePestle}
+                onChange={(e) => setpestle(e.target.value)}
                 placeholder="Pestle"
               >
                 {pestleArr.map((i, index) => (
@@ -261,9 +218,13 @@ const Search = () => {
                 Country
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={country}
-                onChange={handlecountry}
+                onChange={(e) => setcountry(e.target.value)}
                 placeholder="Country"
               >
                 {countryArr.map((i, index) => (
@@ -287,9 +248,13 @@ const Search = () => {
                 EndYear
               </label>
               <select
-                className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
+                style={{
+                  color: mode === "light" ? "black" : "white",
+                  backgroundColor: mode === "light" ? "white" : "black",
+                }}
+                className=" h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={endYear}
-                onChange={handleEndYear}
+                onChange={(e) => setendYear(e.target.value)}
                 placeholder="EndYear"
               >
                 {endYearArr.map((i, index) => (
@@ -300,9 +265,32 @@ const Search = () => {
               </select>
             </div>
           )}
+          <div className="flex flex-col w-full md:w-auto justify-end">
+            <button
+              onClick={handleFilter}
+              type="button"
+              className="px-8 py-2.5 rounded-lg text-base font-semibold bg-white w-full md:w-auto"
+            >
+              filter
+            </button>
+          </div>
         </div>
 
-        <div className="w-full">{/* <DashBoardCharts /> */}</div>
+        <div className="w-full">
+          <AnalyticTable page={page} />
+          <div className="w-full mt-3 p-3 ">
+            <Pagination
+              color="secondary"
+              showFirstButton
+              showLastButton
+              count={SearchData?.totalPages ? SearchData?.totalPages : 0}
+              variant="outlined"
+              shape="rounded"
+              page={SearchData?.page ? SearchData?.page : 0}
+              onChange={handlePageChange}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
