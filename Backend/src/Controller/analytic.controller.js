@@ -9,7 +9,10 @@ export const getAllTempData = async (req, res, next) => {
         })
 
         const totalData = await tempData.aggregate(pipeline)
-        res.status(200).json({ totalData })
+        return res.status(200).json({
+            status: "success",
+            totalData
+        })
     } catch (error) {
         //console.log(error)
         res.status(500).json({
@@ -22,8 +25,8 @@ export const getAllTempData = async (req, res, next) => {
 // get all insight table data
 export const getSearchData = async (req, res, next) => {
     try {
-        const { page = 1, limit = 20, query, sortBy, sortType } = req.query;
-        const { topic, insight, end_year } = req.body
+        const { page=1, limit = 20, query } = req.query;
+        const { sector, pestle, country, end_year } = req.body
 
         const pipeline = [];
 
@@ -38,17 +41,17 @@ export const getSearchData = async (req, res, next) => {
                 },
             });
         }
-        if (topic && topic !== "") {
+        if (pestle && pestle !== "") {
             pipeline.push({
                 $match: {
-                    topic: topic
+                    pestle: pestle
                 }
             })
         }
-        if (insight && insight !== "") {
+        if (sector && sector !== "" && sector !== "Overall") {
             pipeline.push({
                 $match: {
-                    insight: insight
+                    sector: sector
                 }
             })
         }
@@ -59,14 +62,26 @@ export const getSearchData = async (req, res, next) => {
                 }
             })
         }
-
-        if (sortBy || sortType) {
+        if (country && country !== "") {
             pipeline.push({
-                $sort: {
-                    [sortBy || "start_year"]: sortType === "desc" ? -1 : 1,
-                },
-            });
+                $match: {
+                    country: country
+                }
+            })
         }
+
+        // if (sortBy && sortType) {
+        //     pipeline.push({
+        //         $sort: {
+        //             [sortBy || "start_year"]: sortType === "desc" ? -1 : 1,
+        //         },
+        //     });
+        // }
+        pipeline.push({
+            $sort: {
+                end_year: 1
+            }
+        })
         pipeline.push({
             $project: {
                 _id: 0,
@@ -95,7 +110,7 @@ export const getSearchData = async (req, res, next) => {
 // get dashboard analytics data
 export const getDashboardData = async (req, res, next) => {
     try {
-        const { sector, country, start_year } = req.body
+        const { sector, country, pestle, source, region, topic, end_year } = req.body
 
         const pipeline = []
         // function inputType(inputType) {
@@ -118,42 +133,22 @@ export const getDashboardData = async (req, res, next) => {
         //     inputType(region)
         // }
 
-        if (sector && sector !== "" && sector !== "all") {
-            // console.log(sector)
-            total.push({
-                $match: {
-                    sector: sector
-                }
-            })
-        } else {
-            total.push({
-                $match: {}
-            })
+        function addStage(condition, matchObj) {
+            if (condition) {
+                pipeline.push({ $match: matchObj });
+            }
         }
 
-        if (country && country !== "") {
-            // console.log(country)
-            total.push({
-                $match: {
-                    country: country
-                }
-            })
-        } else {
-            total.push({
-                $match: {}
-            })
-        }
+        addStage(sector && sector !== "" && sector !== "Overall", { sector: sector });
+        addStage(country && country !== "", { country: country });
+        addStage(end_year && end_year !== "", { end_year: end_year });
+        addStage(pestle && pestle !== "", { pestle: pestle });
+        addStage(source && source !== "", { source: source });
+        addStage(region && region !== "", { region: region });
+        addStage(topic && topic !== "", { topic: topic });
 
-        if (start_year && start_year !== "") {
-            total.push({
-                $match: {
-                    start_year: start_year
-                }
-            })
-        } else {
-            total.push({
-                $match: {}
-            })
+        if (pipeline.length === 0) {
+            pipeline.push({ $match: {} });
         }
 
         const dashBoardData = await tempData.aggregate(pipeline)
@@ -162,7 +157,7 @@ export const getDashboardData = async (req, res, next) => {
         let pestleData = new Set()
         let countryData = new Set()
         let topicData = new Set()
-        totalData.map((value) => {
+        dashBoardData.map((value) => {
             if (value.sector !== "" && !sectorData.has(value))
                 sectorData.add(value.sector)
             if (value.pestle !== "" && !pestleData.has(value))
@@ -172,17 +167,17 @@ export const getDashboardData = async (req, res, next) => {
             if (value.topic !== "" && !topicData.has(value))
                 topicData.add(value.topic)
         })
-        console.log(topicData.size)
+        console.log(dashBoardData.length)
         return res.status(200).json({
             status: "success",
-            data: [{ id: 1, value: [...sectorData] },
-            { id: 2, value: [...pestleData] },
-            { id: 3, value: [...countryData] },
-            { id: 4, value: [...topicData] }],
+            data: [{ id: 1, name: "Sectors", value: [...sectorData] },
+            { id: 2, name: "Pestles", value: [...pestleData] },
+            { id: 3, name: "Country", value: [...countryData] },
+            { id: 4, name: "Topics", value: [...topicData] }],
             dashBoardData
         })
     } catch (error) {
-        //console.log(error)
+        console.log(error)
         return res.status(500).json({
             status: "failed",
             message: "Server error",

@@ -1,10 +1,11 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
-    theme: "light",
+    mode: "light",
     allData: null,
     searchData: null,
-    DashBoardData: null,
+    DashBoardData: { listData: null, visualData: null },
+
 
 }
 
@@ -12,24 +13,27 @@ export const anlyticsSlice = createSlice({
     name: "Analytics",
     initialState,
     reducers: {
-        allData: (state, action) => {
-            const { payload1, payload2 } = action.payload;
-            const todo = {
-                id: nanoid(),
-                header: payload1,
-                discription: payload2
-            }
-            state.data.push(todo)
+        setmode: (state) => {
+            state.mode = state.mode === "light" ? "dark" : "light";
         },
-        searchData: () => {
-
+        setallData: (state, action) => {
+            const { allData } = action.payload
+            state.allData = allData
         },
-        DashBoardData: () => {
+        setsearchData: (state, action) => {
+            const searchData = action.payload
+            state.searchData = searchData
+        },
+        setDashBoardData: (state, action) => {
+            const { listData, visualData } = action.payload;
 
+            state.DashBoardData.listData = listData
+            state.DashBoardData.visualData = visualData
         }
     }
 })
 
-export const { allData, searchData, DashBoardData } = anlyticsSlice.actions
+export const { setmode,
+    setallData, setsearchData, setDashBoardData } = anlyticsSlice.actions
 
 export default anlyticsSlice.reducer

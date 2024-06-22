@@ -4,7 +4,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, //urls to give access
+    origin: "*", //urls to give access
     credentials: true,
   })
 );
