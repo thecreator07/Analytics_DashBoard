@@ -5,30 +5,19 @@ import { BiSolidShoppingBags } from "react-icons/bi";
 import { FaEarthAsia } from "react-icons/fa6";
 import { TbFilter } from "react-icons/tb";
 import { useEffect, useState } from "react";
-// import IntensityGraph from "../components/IntensityGraph";
-// import PiechartPESTLE from "../components/PiechartPESTLE";
-// import CountryGraph from "../components/CountryGraph";
-// import DonutRegion from "../components/DonutRegion";
-// import { UserContext } from "../context/userContext";
-// import { fetc, fetchUserData } from "../api/userAPI"
-// import { SECTOR_FILTER_VALUES } from "../utils/constants";
-import { IoSearch } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVisualData, fetchAllData } from "../Api/fetchApi";
 import { setallData, setDashBoardData } from "../state/sliceReducer";
 import { SECTORS } from "../utils/constant";
 import { useMediaQuery } from "@mui/material";
-import { Select } from "antd";
-import { useStyleRegister } from "antd/es/theme/internal";
+
 import DashBoardCharts from "../components/DashBoard/DashBoardCharts";
 // visualize
 const DashBoard = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
-  const ismobile = useMediaQuery('(min-width:"600px")');
-  // const [sectorFilter, setSectorFilter] = useState("");
-  // const [countryFilter, setCountryFilter] = useState("");
+  const ismobile = useMediaQuery('(min-width:"600px")')
   const [country, setcountry] = useState("");
   const [topic, settopic] = useState("");
   const [endYear, setendYear] = useState("");
@@ -387,7 +376,7 @@ const DashBoard = () => {
               >
                 {regionArr.map((i, index) => (
                   <option key={index} value={i}>
-                    {i}
+                    `${i}`
                   </option>
                 ))}
               </select>

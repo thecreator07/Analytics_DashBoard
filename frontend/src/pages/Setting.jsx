@@ -12,7 +12,6 @@ function Setting() {
         <h4>Mode :</h4>
         <Switch
           // value={check}
-          
           onChange={() => dispatch(setmode())}
         />
       </div>

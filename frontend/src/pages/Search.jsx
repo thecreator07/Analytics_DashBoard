@@ -1,27 +1,13 @@
 // icons
-import { GrGroup } from "react-icons/gr";
-import { LuPackageCheck } from "react-icons/lu";
-import { BiSolidShoppingBags } from "react-icons/bi";
-import { FaEarthAsia } from "react-icons/fa6";
-import { TbFilter } from "react-icons/tb";
+
 import { useEffect, useState } from "react";
-// import IntensityGraph from "../components/IntensityGraph";
-// import PiechartPESTLE from "../components/PiechartPESTLE";
-// import CountryGraph from "../components/CountryGraph";
-// import DonutRegion from "../components/DonutRegion";
-// import { UserContext } from "../context/userContext";
-// import { fetc, fetchUserData } from "../api/userAPI"
-// import { SECTOR_FILTER_VALUES } from "../utils/constants";
-import { IoSearch } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllData, fetchSearchData } from "../Api/fetchApi";
-import { setallData, setDashBoardData, setsearchData } from "../state/sliceReducer";
+import { setallData, setsearchData } from "../state/sliceReducer";
 import { SECTORS } from "../utils/constant";
 import { useMediaQuery } from "@mui/material";
-import { Select } from "antd";
-import { useStyleRegister } from "antd/es/theme/internal";
-import DashBoardCharts from "../components/DashBoard/DashBoardCharts";
+
 // visualize
 const Search = () => {
   const dispatch = useDispatch();
@@ -40,7 +26,7 @@ const Search = () => {
   const fetchAndSetSearchData = async (data) => {
     try {
       const { results } = await fetchSearchData(data);
-      console.log(results);
+      console.log("results", results);
       dispatch(setsearchData({ searchData: results }));
     } catch (error) {
       console.error("Error during fetching data:", error);
@@ -57,13 +43,12 @@ const Search = () => {
   };
   const SearchData = useSelector((state) => state.searchData);
   const getAllDAta = useSelector((state) => state.allData);
-  console.log(SearchData);
+  console.log("searchData", SearchData);
   //   console.log("search", search?search:"");
-  const pages=3
   const handleSearch = () => {
     fetchAndSetSearchData({
-      query: search||null,
-      page: pages||1,
+      query: search || "",
+      page: page || 1,
       fetch: {
         sector: sector || "",
         country: country || "",
@@ -72,53 +57,66 @@ const Search = () => {
       },
     });
   };
-
+  let page;
   const handlePestle = (e) => {
     const { value } = e.target;
     setpestle(value);
     // console.log(e);
     fetchAndSetSearchData({
-      end_year: end_year || "",
-      country: country || "",
-      sector: sector || "",
-      pestle: value,
+      query: search || "",
+      page: page || 1,
+      fetch: {
+        sector: sector || "",
+        country: country || "",
+        pestle: value || "",
+        end_year: end_year || "",
+      },
     });
   };
   const handleSector = (e) => {
-    setsector(e.target.value);
-    setcountry("");
+    const { value } = e.target;
 
-    setpestle("");
-
-    setendYear("");
-
+    setsector(value);
     fetchAndSetSearchData({
-      sector: e.target.value,
-      country: "",
-      pestle: "",
-
-      end_year: "",
+      query: search || "",
+      page: page || 1,
+      fetch: {
+        sector: value || "",
+        country: country || "",
+        pestle: pestle || "",
+        end_year: end_year || "",
+      },
     });
   };
   const handlecountry = (e) => {
-    setcountry(e.target.value);
-    fetchAndSetSearchData({
-      sector: sector || "",
-      country: e.target.value,
-      pestle: pestle || "",
+    const { value } = e.target;
 
-      end_year: endYear || "",
+    setcountry(value);
+    fetchAndSetSearchData({
+      query: search || "",
+      page: page || 1,
+      fetch: {
+        sector: sector || "",
+        country: value || "",
+        pestle: pestle || "",
+        end_year: end_year || "",
+      },
     });
   };
 
   const handleEndYear = (e) => {
-    setEndYear(e.target.value);
-    fetchAndSetSearchData({
-      sector: sector || "",
-      country: country || "",
-      pestle: pestle || "",
+    const { value } = e.target;
 
-      end_year: e.target.value,
+    setEndYear(value);
+    fetchAndSetSearchData({
+      query: search || "",
+      page: page || 1,
+      fetch: {
+        sector: sector || "",
+        country: country || "",
+        pestle: pestle || "",
+        end_year: value || "",
+      },
     });
   };
 
@@ -168,11 +166,11 @@ const Search = () => {
   const countryArr = [...countryData];
   const sectorArr = [...sectorData];
   const endYearArr = [...endYearData];
-  // console.log("Pestle", pestleArr);
+  console.log(endYearArr);
   useEffect(() => {
     fetchAndSetSearchData();
     fetchwholedata();
-  }, []);
+  }, [sector, pestle, sector, endYear, search, page]);
 
   return (
     <div className="w-full h-full">
@@ -240,7 +238,7 @@ const Search = () => {
                 className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={pestle}
                 onChange={handlePestle}
-                placeholder="Pestles"
+                placeholder="Pestle"
               >
                 {pestleArr.map((i, index) => (
                   <option key={index} value={i}>
@@ -266,7 +264,7 @@ const Search = () => {
                 className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={country}
                 onChange={handlecountry}
-                placeholder="Pestles"
+                placeholder="Country"
               >
                 {countryArr.map((i, index) => (
                   <option key={index} value={i}>
@@ -292,7 +290,7 @@ const Search = () => {
                 className="neomorph bg-inherit h-full w-full md:w-auto focus:outline-none outline-none border  p-2.5 rounded-lg text-sm cursor-pointer"
                 value={endYear}
                 onChange={handleEndYear}
-                placeholder="Pestles"
+                placeholder="EndYear"
               >
                 {endYearArr.map((i, index) => (
                   <option key={index} value={i}>

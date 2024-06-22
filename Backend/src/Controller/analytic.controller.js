@@ -25,7 +25,7 @@ export const getAllTempData = async (req, res, next) => {
 // get all insight table data
 export const getSearchData = async (req, res, next) => {
     try {
-        const { page=1, limit = 20, query } = req.query;
+        const { page = 1, limit = 20, query } = req.query;
         const { sector, pestle, country, end_year } = req.body
 
         const pipeline = [];

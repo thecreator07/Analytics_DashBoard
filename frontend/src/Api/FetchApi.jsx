@@ -28,17 +28,17 @@ export const fetchVisualData = async (data) => {
 
 export const fetchSearchData = async (data) => {
   let url = `${API_URI}/api/v1/search`;
-  if (data?.query && data?.page) {
-    url += `?page=${data?.page}&query=${data?.query}`;
-  } else if (data?.page) {
-    url += `?page=${page}`;
-  } else if (data?.query) {
-    url += `?query=${query}`;
-  } else {
-    url += "";
+  if (data && data.query && data.page) {
+    url += `?page=${data.page}&query=${data.query}`;
   }
-  // console.log(url)
-  // console.log("data", data);
+  if (data && data.page) {
+    url += `?page=${data.page}`;
+  }
+  if (data && data.query) {
+    url += `?query=${data.query}`;
+  }
+  console.log(url)
+  console.log("data", data);
   const response = await fetch(url, {
     method: "POST",
     headers: {
