@@ -21,6 +21,12 @@ export const getAllTempData = async (req, res, next) => {
         })
     }
 }
+// {
+//     "version": 2,
+//     "builds": [{ "src": "*./index.js", "use": "@vercel/node" }],
+//     "routes": [{ "src": "/(.*)", "dest": "/" }]
+//   }
+  
 
 // get all insight table data
 export const getSearchData = async (req, res, next) => {
