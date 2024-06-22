@@ -15,8 +15,8 @@ const HomePage = () => {
   const navigate = useNavigate();
   console.log(mode);
   useEffect(() => {
-    if (location.pathname === "/home") {
-      navigate("/home/main");
+    if (location.pathname === "/") {
+      navigate("/main");
     }
   }, [location.pathname, navigate]);
 

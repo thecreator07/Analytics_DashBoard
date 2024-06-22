@@ -12,6 +12,11 @@ app.use(
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "./public/dist")))
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public/dist/index.html"))
+})
+
 
 import dataRouter from "./routes/data.routes.js"
 
