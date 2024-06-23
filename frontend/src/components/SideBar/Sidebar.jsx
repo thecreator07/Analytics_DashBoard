@@ -11,18 +11,18 @@ import { LiaCogSolid } from "react-icons/lia";
 import { SiCompilerexplorer } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 
-const Sidebar = () => {
+const Sidebar = ({show}) => {
   // const { dispatch } = useContext(UserContext)
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
   
 
-  const NavlinkStyle = ` my-2 px-6 py-3 text-lg font-medium hover:bg-[#151631] hover:text-white;`;
+  const NavlinkStyle = ` my-2 px-6 py-3 text-lg font-medium hover:bg-[#151631]  hover:text-white;`;
   return (
     <div
-      className={`w-full md:w-2/12 flex-col justify-between h-full ${
+      className={`w-full md:w-2/12 ${show?"hidden":""} absolute md:relative flex-col justify-between h-full ${
         mode === "light" ? "bg-white text-[#414141]" : "bg-[#414141] text-white"
-      } py-4  hidden md:flex`}
+      } py-4 md:flex z-20`}
     >
       <div className="w-full">
         <div className="w-full flex justify-center px-4">

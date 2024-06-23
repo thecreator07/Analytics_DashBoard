@@ -128,7 +128,7 @@ const Search = () => {
             type="text"
             onChange={(e) => setsearch(e.target.value)}
             placeholder="Energy oil China"
-            className="px-4 rounded-3xl border focus:outline-none outline-none "
+            className="px-4 py-2.5 rounded-3xl border focus:outline-none outline-none "
           />
           <button
             onClick={handleSearch}
