@@ -184,7 +184,7 @@ export const getDashboardData = async (req, res, next) => {
             if (value.topic !== "" && !topicData.has(value))
                 topicData.add(value.topic)
         })
-        console.log(dashBoardData.length)
+        // console.log(dashBoardData.length)
         return res.status(200).json({
             status: "success",
             data: [{ id: 1, name: "Sectors", value: [...sectorData] },
