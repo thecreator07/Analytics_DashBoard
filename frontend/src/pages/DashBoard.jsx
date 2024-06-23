@@ -400,7 +400,7 @@ const DashBoard = () => {
               >
                 {regionArr.map((i, index) => (
                   <option key={index} value={i}>
-                    `${i}`
+                    {i}
                   </option>
                 ))}
               </select>
