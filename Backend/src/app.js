@@ -11,6 +11,7 @@ app.use(
     credentials: true,
   })
 );
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 console.log(__dirname)
 // console.log(dummy)
